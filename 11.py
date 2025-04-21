@@ -89,6 +89,56 @@ slot_sample = SlotPoint(1, 2)
 
 print(f"Размер NormalPoint: {sys.getsizeof(normal_sample)} байт")
 print(f"Размер SlotPoint:   {sys.getsizeof(slot_sample)} байт")
-
-# Размер __dict__ у NormalPoint
 print(f"Размер __dict__ NormalPoint: {sys.getsizeof(normal_sample.__dict__)} байт")
+
+#3 «Студенческий журнал»
+class Student:
+    __slots__ = ('name', 'age', 'grade')
+
+    def __init__(self, name, age, grade):
+        self.name = name
+        self.age = age
+        self.grade = grade
+
+students = [
+    Student("Анна", 20, 85),
+    Student("Борис", 21, 90),
+    Student("Виктор", 19, 78),
+    Student("Галина", 22, 92),
+    Student("Дмитрий", 20, 88)
+]
+def average_grade(student_list):
+    if not student_list:
+        return 0
+    total = sum(student.grade for student in student_list)
+    return total / len(student_list)
+
+avg = average_grade(students)
+print(f"Средняя оценка студентов: {avg}")
+
+#4 
+class Product:
+    __slots__ = ('name', 'price', 'quantity')
+
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+
+inventory = {
+    "Ноутбук": Product("Ноутбук", 75000, 5),
+    "Смартфон": Product("Смартфон", 45000, 10),
+    "Наушники": Product("Наушники", 3000, 25),
+    "Монитор": Product("Монитор", 22000, 7),
+    "Клавиатура": Product("Клавиатура", 2500, 15)
+}
+
+
+def expensive_products(product_dict, price_threshold):
+    return [name for name, product in product_dict.items() if product.price > price_threshold]
+
+threshold = 20000
+result = expensive_products(inventory, threshold)
+
+print(f"Товары дороже {threshold} руб.: {', '.join(result)}")
